@@ -13,15 +13,21 @@ from app.models import Translation, Language
 
 
 def index(request):
-    short = request.GET.get("language", "fr")
+    short = request.GET.get("language", "")
 
-    language = Language.objects.get(short=short)
-    translations = Translation.objects.filter(language=language)
+    try:
+        language = Language.objects.get(short=short)
+        translations = Translation.objects.filter(language=language)
+    except app.models.Language.DoesNotExist:
+        translations = None
 
     languages = Language.objects.all()
 
     return render(request, 'table.html', context={"translations": translations, "languages": languages})
 
+def update_translation(request):
+    short = request.POST.get("language", "")
+    request.POST.get("language", "")
 
 def download(request):
     short = request.GET.get("language", "fr")
