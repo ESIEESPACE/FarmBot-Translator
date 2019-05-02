@@ -1,12 +1,12 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">FarmBot Translator</a>
+    <a class="navbar-brand" href="{% url 'index' %}">FarmBot Translator</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Import</a>
+            <a class="nav-link" href="{% url 'import' %}">Import</a>
           </li>
         </ul>
   </div>
