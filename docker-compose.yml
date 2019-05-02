@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - var.env
+    volumes:
+      - ./:/code
+    ports:
+      - "8000:8000"
