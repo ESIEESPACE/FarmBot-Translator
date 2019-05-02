@@ -10,8 +10,10 @@ $(".td-tr").dblclick(function (event) {
 
     target.empty();
     target.append("<textarea id=\"tz-" + id + "\" class=\"tz-tr form-control\">" + content + "</textarea>");
+    target.append("<input id=\"bt-" + id + "\" type='button' value='Cancel'>");
 
     var textarea = $("#tz-" + id);
+    var cnButton = $("#bt-" + id);
 
     textarea.focus();
     textarea.focusout(function () {
@@ -20,4 +22,9 @@ $(".td-tr").dblclick(function (event) {
         target.text(textarea.val());
     });
 
+    cnButton.click(function () {
+        target.removeClass("selected");
+        target.empty();
+        target.text(content);
+    });
 });
