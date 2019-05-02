@@ -13,17 +13,12 @@
           </thead>
           <tbody>
             {% for e in translations %}
-                <tr>
+                <tr id="tr-{{ e.position }}">
                     <th scope="row">{{ e.position }}</th>
                     <td>{{ e.original }}</td>
-                    <td>{{ e.translation }}</td>
+                    <td class="td-tr" id="td-{{ e.position }}">{{ e.translation }}</td>
                 </tr>
             {% endfor %}
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
             <tr>
                 <th scope="row">3</th>
                 <td>Larry</td>
