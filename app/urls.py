@@ -12,4 +12,5 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('import/', views.import_file, name="import"),
     path('download/', views.download, name="download"),
+    path('update/', views.update_translation, name="update"),
 ]

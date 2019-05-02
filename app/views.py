@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+
 import app
 from app import models
 from app.forms import UploadLanguageFileForm
@@ -25,9 +27,22 @@ def index(request):
 
     return render(request, 'table.html', context={"translations": translations, "languages": languages})
 
+@csrf_exempt
 def update_translation(request):
     short = request.POST.get("language", "")
-    request.POST.get("language", "")
+    id = request.POST.get("id", "")
+    translation = request.POST.get("translation", "")
+
+    try:
+        language = Language.objects.get(short=short)
+        tr = Translation.objects.get(language=language, id=id)
+        tr.translation = translation
+        tr.save()
+    except Exception:
+        return django.http.HttpResponseBadRequest()
+
+    return django.http.HttpResponse(status=200)
+
 
 def download(request):
     short = request.GET.get("language", "fr")
@@ -47,7 +62,7 @@ def import_file(request):
             name = form.cleaned_data.get("name")
             short = str(form.cleaned_data.get("file"))[:str(form.cleaned_data.get("file")).find(".json")]
             json_to_bdd(request.FILES['file'], name=name, short=short)
-            # return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/?language=' + short)
     else:
         form = UploadLanguageFileForm()
 
