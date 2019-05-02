@@ -1,9 +1,22 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-    <form action="{% url 'import' %}" method="post">
+    <form action="{% url 'import' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form }}
+        {{ form.non_field_errors }}
+        
+        <div class="fieldWrapper">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }} : </label>
+            {{ form.name }}
+        </div>
+        
+         <div class="fieldWrapper">
+            {{ form.file.errors }}
+            <label for="{{ form.file.id_for_label }}">{{ form.file.label }} : </label>
+            {{ form.file }}
+        </div>
+        
         <input type="submit" value="Submit">
     </form>
 {% endblock %}

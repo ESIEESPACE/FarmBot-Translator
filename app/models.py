@@ -15,7 +15,16 @@ class Translation(models.Model):
     original = models.TextField()
     translation = models.TextField()
     translated = models.BooleanField(default=False)
+    other = models.BooleanField(default=False)
     language = models.ForeignKey(Language, on_delete=models.SET(None))
 
     def __str__(self):
-        return self.position+ " : "+self.language
+        if self.translated:
+            state = "Translated"
+        else:
+            if self.other:
+                state = "Other"
+            else:
+                state = "Untranslated"
+
+        return str(self.language)+" : "+state+" : "+str(self.position)
