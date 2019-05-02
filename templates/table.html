@@ -6,16 +6,18 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">en</th>
-              <th scope="col">{{ e.language }}</th>
+              <th scope="col">Original</th>
+              <th scope="col">Translation</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
+            {% for e in translations %}
+                <tr>
+                    <th scope="row">{{ e.position }}</th>
+                    <td>{{ e.original }}</td>
+                    <td>{{ e.translation }}</td>
+                </tr>
+            {% endfor %}
             <tr>
               <th scope="row">2</th>
               <td>Jacob</td>

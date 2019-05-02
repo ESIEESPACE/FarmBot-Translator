@@ -11,7 +11,15 @@ from app.models import Translation, Language
 
 
 def index(request):
-    return render(request, 'table.html')
+
+    short = request.GET.get("language", "fr")
+
+    language = Language.objects.get(short=short)
+    translations = Translation.objects.filter(language=language)
+
+    languages = Language.objects.all()
+
+    return render(request, 'table.html', context={"translations": translations, "languages": languages})
 
 
 def import_file(request):
