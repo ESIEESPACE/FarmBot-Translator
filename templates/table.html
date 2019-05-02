@@ -6,26 +6,17 @@
         <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Original</th>
               <th scope="col">Translation</th>
             </tr>
           </thead>
           <tbody>
             {% for e in translations %}
-                <tr id="tr-{{ e.position }}">
-                    <th scope="row">{{ e.position }}</th>
+                <tr>
                     <td>{{ e.original }}</td>
                     <td class="td-tr" id="td-{{ e.position }}">{{ e.translation }}</td>
                 </tr>
             {% endfor %}
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>
-                    <input type="text" class="translated form-control">
-                </td>
-            </tr>
           </tbody>
         </table>
     </div>

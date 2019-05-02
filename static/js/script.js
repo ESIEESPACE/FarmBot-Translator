@@ -1,11 +1,3 @@
-$(".tz-tr").focus(function (event) {
-    console.log(event);
-});
-
-$(".tz-tr").focusout(function (event) {
-
-});
-
 $(".td-tr").dblclick(function (event) {
     var target = $(event.target);
     var id = $(event.target).attr("id");
