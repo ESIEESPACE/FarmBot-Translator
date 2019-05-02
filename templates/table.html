@@ -1,5 +1,34 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-
+    <div class="container">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">en</th>
+              <th scope="col">{{ e.language }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>
+                    <input type="text" class="translated form-control">
+                </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
 {% endblock %}
