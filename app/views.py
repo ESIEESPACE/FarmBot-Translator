@@ -1,17 +1,18 @@
 import json
 
+import django
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+import app
 from app import models
 from app.forms import UploadLanguageFileForm
 from app.models import Translation, Language
 
 
 def index(request):
-
     short = request.GET.get("language", "fr")
 
     language = Language.objects.get(short=short)
@@ -22,6 +23,16 @@ def index(request):
     return render(request, 'table.html', context={"translations": translations, "languages": languages})
 
 
+def download(request):
+    short = request.GET.get("language", "fr")
+    try:
+        response = HttpResponse(json.dumps(bdd_to_json(short), ensure_ascii=False), content_type="application/json")
+        response['Content-Disposition'] = 'attachment; filename=' + short + '.json'
+        return response
+    except app.models.Language.DoesNotExist:
+        return django.http.HttpResponseNotFound()
+
+
 def import_file(request):
     if request.method == 'POST':
         form = UploadLanguageFileForm(request.POST, request.FILES)
@@ -30,7 +41,7 @@ def import_file(request):
             name = form.cleaned_data.get("name")
             short = str(form.cleaned_data.get("file"))[:str(form.cleaned_data.get("file")).find(".json")]
             json_to_bdd(request.FILES['file'], name=name, short=short)
-            #return HttpResponseRedirect('/')
+            # return HttpResponseRedirect('/')
     else:
         form = UploadLanguageFileForm()
 
@@ -75,5 +86,24 @@ def json_to_bdd(json_file, name, short):
         i += 1
 
 
-def bdd_to_json(language):
-    pass
+def bdd_to_json(short):
+    language = Language.objects.get(short=short)
+    translated = {}
+    for e in Translation.objects.filter(language=language, translated=True):
+        translated[e.original] = e.translation
+
+    untranslated = {}
+    for e in Translation.objects.filter(language=language, translated=False):
+        untranslated[e.original] = e.translation
+
+    other_translations = {}
+    for e in Translation.objects.filter(language=language, other=True):
+        other_translations[e.original] = e.translation
+
+    result = {
+        "translated": translated,
+        "untranslated": untranslated,
+        "other_translations": other_translations
+    }
+
+    return result
