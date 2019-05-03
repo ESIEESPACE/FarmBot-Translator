@@ -74,3 +74,9 @@ function saveTranslation() {
         }, 1500);
     })
 }
+
+function updateByID(id, content, date) {
+    let row = $("#" + id);
+    row.find("td.td-tr").text(content);
+    row.find("td.date").text(date);
+}

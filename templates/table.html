@@ -21,10 +21,10 @@
 	          </thead>
 	          <tbody>
 	            {% for e in translations %}
-	                <tr scope="row">		    
+	                <tr scope="row" id="{{ e.id }}">
 	                    <td class="large-col">{{ e.original }}</td>
 	                    <td class="td-tr large-col" id="td-{{ e.id }}">{{ e.translation }}</td>
-			            <td class="small-col">{{ e.updated_at }}</td>
+			            <td class="small-col date">{{ e.updated_at }}</td>
 	                </tr>
 	            {% endfor %}
 	          </tbody>
