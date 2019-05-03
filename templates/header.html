@@ -9,10 +9,16 @@
 		<span class="text-white">by <a href="https://esieespace.fr">Esieespace</a></span>
         </ul>
          <ul class="navbar-nav">
+             <li class="nav-item">
+                <a class="nav-link" href="admin">Admin</a>
+            </li>
             <!-- Right -->
+         {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'import' %}">Import</a>
             </li>
+         {% endif %}
+
          {% if  languages.0 %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
