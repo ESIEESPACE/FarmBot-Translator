@@ -1,7 +1,7 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-    <div class="container download">
+    <div class="container download" xmlns="http://www.w3.org/1999/html">
         <a href="{%  url 'download' %}?language={{  translations.0.language.short }}"><button class="btn btn-outline-primary">Download</button></a>
     </div>
 
@@ -25,4 +25,30 @@
         </table>
 
     </div>
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Help</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <b>How to change language ?</b><br/>
+              <p>Click on the language selector in the page right corner of the page</p></br>
+              <b>How to edit document ?</b><br />
+              <p>Double click on the translation area to edit it. <br /> To save your changes just double click on the text box or click on the save button.</p><br/>
+
+              <b>How import a new language ?</b><br/>
+              <p>Go to import page.</p><br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="help" data-toggle="modal" data-target="#helpModal">?</button>
 {% endblock %}
