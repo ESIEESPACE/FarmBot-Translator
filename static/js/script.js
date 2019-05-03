@@ -43,21 +43,30 @@ function saveTranslation() {
 
     let id = selected.attr("id");
     let content = selected.find("textarea").val();
+    let tr = selected.parent();
 
     selected.removeClass("selected");
     selected.empty();
     selected.text(content);
+
     let request = $.post( "update/",
         { 
             language: $.urlParam("language"),
             id: parseInt(id.substring(3)) + 1,
             translation: content 
         });
-    request.done(function () {
 
+    request.done(function () {
+        tr.addClass("bg-success");
+        setTimeout(function(){
+            tr.removeClass("bg-success")
+        }, 1500);
     });
 
     request.fail(function () {
-
+        tr.addClass("bg-danger");
+        setTimeout(function(){
+            tr.removeClass("bg-danger")
+        }, 1500);
     })
 }
