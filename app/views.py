@@ -19,7 +19,7 @@ def index(request):
 
     try:
         language = Language.objects.get(short=short)
-        translations = Translation.objects.filter(language=language)
+        translations = Translation.objects.filter(language=language).order_by('translated')
     except app.models.Language.DoesNotExist:
         translations = None
 
@@ -37,6 +37,8 @@ def update_translation(request):
         language = Language.objects.get(short=short)
         tr = Translation.objects.get(language=language, id=id)
         tr.translation = translation
+        if not tr.other:
+            tr.translated = True
         tr.save()
     except Exception:
         return django.http.HttpResponseBadRequest()
@@ -70,10 +72,6 @@ def import_file(request):
 
 
 def json_to_bdd(json_file, name, short):
-    """with open('some/file/name.txt', 'wb+') as destination:
-        for chunk in json_file.chunks():
-            destination.write(chunk)"""
-
     decoded_json = json.loads(json_file.read())
 
     try:
@@ -89,32 +87,42 @@ def json_to_bdd(json_file, name, short):
     for e in translated:
         k = e.get('original')
         v = e.get('translation')
-        Translation.objects.create(position=i, original=k, translation=v, translated=True, language=language)
+        try:            
+            Translation.objects.get(original=k, translated=True, language=language)        
+            Translation.objects.get(original=k, language=language)        
+        except app.models.Translation.DoesNotExist:        
+            Translation.objects.create(position=i, original=k, translation=v, translated=True, language=language)
         i += 1
 
     i = 0
     for e in untranslated:
         k = e.get('original')
         v = e.get('translation')
-        Translation.objects.create(position=i, original=k, translation=v, language=language)
+        try:            
+            Translation.objects.get(original=k, language=language)        
+        except app.models.Translation.DoesNotExist:        
+            Translation.objects.create(position=i, original=k, translation=v, language=language)
         i += 1
 
     i = 0
     for e in other_translations:
         k = e.get('original')
         v = e.get('translation')
-        Translation.objects.create(position=i, original=k, translation=v, other=False, language=language)
+        try:            
+            Translation.objects.get(original=k, language=language)   
+        except app.models.Translation.DoesNotExist:        
+            Translation.objects.create(position=i, original=k, translation=v, other=True, language=language)
         i += 1
 
 
 def bdd_to_json(short):
     language = Language.objects.get(short=short)
     translated = {}
-    for e in Translation.objects.filter(language=language, translated=True):
+    for e in Translation.objects.filter(language=language, translated=True, other=False):
         translated[e.original] = e.translation
 
     untranslated = {}
-    for e in Translation.objects.filter(language=language, translated=False):
+    for e in Translation.objects.filter(language=language, translated=False, other=False):
         untranslated[e.original] = e.translation
 
     other_translations = {}
