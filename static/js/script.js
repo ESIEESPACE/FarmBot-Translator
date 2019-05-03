@@ -61,11 +61,11 @@ function saveTranslation() {
         });
 
     request.done(function () {
-        coloredSignal(tr, "rgba(0, 255, 0, 1)", 500);
+        coloredSignal(tr, "rgba(40, 167, 69, 1)", 500);
     });
 
     request.fail(function () {
-        coloredSignal(tr, "rgba(255, 0, 0, 1)", 500);
+        coloredSignal(tr, "rgba(250, 55, 69, 1)", 500);
     })
 }
 
