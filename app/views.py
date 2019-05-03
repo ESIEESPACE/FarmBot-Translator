@@ -88,8 +88,10 @@ def json_to_bdd(json_file, name, short):
         k = e.get('original')
         v = e.get('translation')
         try:            
-            Translation.objects.get(original=k, translated=True, language=language)        
-            Translation.objects.get(original=k, language=language)        
+            tr = Translation.objects.get(original=k, language=language)        
+            tr.translation = v
+            tr.translated = True
+            tr.save()
         except app.models.Translation.DoesNotExist:        
             Translation.objects.create(position=i, original=k, translation=v, translated=True, language=language)
         i += 1
