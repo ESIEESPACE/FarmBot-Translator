@@ -14,14 +14,18 @@ $(".td-tr").dblclick(function (event) {
     target.empty();
 
     target.append("<textarea id='tz-" + id + "' class='tz-tr form-control'>" + content + "</textarea>");
-    target.append("<input id='bt-" + id + "' type='button' value='Cancel' class='btn btn-danger cnButton'>");
+    target.append("<input id='cl-" + id + "' type='button' value='Cancel' class='btn btn-danger cnButton'>");
+    target.append("<input id='sc-" + id + "' type='button' value='Save' class='btn btn-success cnButton'>");
 
     let textarea = $("#tz-" + id);
-    let cnButton = $("#bt-" + id);
+    let clButton = $("#cl-" + id);
+    let scButton = $("#sc-" + id);
 
     textarea.focus();
 
-    cnButton.click(function () {
+    scButton.click(saveTranslation);
+
+    clButton.click(function () {
         target.removeClass("selected");
         target.empty();
         target.text(content);
