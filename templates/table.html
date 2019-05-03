@@ -16,13 +16,15 @@
         	    <tr>
 	              <th scope="col">Original</th>
         	      <th scope="col">Translation</th>
+        	      <th scope="col" class="d-none d-sm-table-cell">Last Update</th>
 	            </tr>
 	          </thead>
 	          <tbody>
 	            {% for e in translations %}
-	                <tr>
-	                    <td>{{ e.original }}</td>
-	                    <td class="td-tr" id="td-{{ e.id }}">{{ e.translation }}</td>
+	                <tr scope="row">		    
+	                    <td class="col-sm-4">{{ e.original }}</td>
+	                    <td class="td-tr col-sm-4" id="td-{{ e.id }}">{{ e.translation }}</td>
+			    <td class="d-none d-sm-table-cell">{{ e.updated_at }}</td>			   
 	                </tr>
 	            {% endfor %}
 	          </tbody>
