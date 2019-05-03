@@ -61,18 +61,40 @@ function saveTranslation() {
         });
 
     request.done(function () {
-        tr.addClass("bg-success");
-        setTimeout(function(){
-            tr.removeClass("bg-success")
-        }, 1500);
+        coloredSignal(tr, "rgba(0, 255, 0, 1)", 500);
     });
 
     request.fail(function () {
-        tr.addClass("bg-danger");
-        setTimeout(function(){
-            tr.removeClass("bg-danger")
-        }, 1500);
+        coloredSignal(tr, "rgba(255, 0, 0, 1)", 500);
     })
+}
+
+function coloredSignal(object, color, duration) {
+    const refreshRate = 10;
+    let origincolor = object.css("background-color").substring(5).replace(')', '').split(',');
+    color = color.substring(5).replace(')', '').split(',');
+
+    let timeCounter = 0;
+
+    let interval = setInterval(function () {
+        let newcolor = "rgba(";
+        for(let i=0; i<4; i++){
+            if(i!=0) newcolor += ",";
+            let coef = (parseFloat(origincolor[i]) - parseFloat(color[i]))/duration;
+            let cons = -coef * duration + parseFloat(origincolor[i]);
+            newcolor += coef * timeCounter + cons;
+        }
+        newcolor += ")";
+        object.css("background-color", newcolor);
+
+        timeCounter += refreshRate;
+        if(timeCounter >= duration) {
+            clearInterval(interval);
+            setTimeout(function () {
+                object.css("background-color", origincolor);
+            }, refreshRate)
+        }
+    }, refreshRate);
 }
 
 function updateByID(id, content, date) {
