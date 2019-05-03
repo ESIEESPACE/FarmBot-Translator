@@ -32,6 +32,9 @@ def update_translation(request):
     short = request.POST.get("language", "")
     id = request.POST.get("id", "")
     translation = request.POST.get("translation", "")
+    
+    if translation == "":
+        return django.http.HttpResponseBadRequest()
 
     try:
         language = Language.objects.get(short=short)
