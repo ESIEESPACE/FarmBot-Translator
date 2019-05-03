@@ -2,6 +2,8 @@
 
 {% block body %}
     <div class="container">
+
+	{% if user.is_authenticated %}
         <form action="{% url 'import' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -26,5 +28,9 @@
 
             <input type="submit" class="btn btn-primary" value="Submit">
         </form>
+
+	{% else %}
+	    	<h3 class="text-center">You must be logged in to import a new language</h3>
+	{% endif %}
     </div>
 {% endblock %}
