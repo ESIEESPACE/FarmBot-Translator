@@ -6,6 +6,34 @@ td {
     white-space: pre-line;
 }
 
+
+table {
+    table-layout: fixed;
+}
+
+th {
+    vertical-align: inherit;
+}
+
+.large-col {
+    width: 45%;
+}
+
+.small-col {
+    width: 10%;
+}
+
+@media (max-width: 990px) {
+    .large-col {
+        width: 50%;
+    }
+
+    .small-col {
+        width: 0%;
+        display: none;
+    }
+}
+
 .container{
     padding-top: 10px;
 }

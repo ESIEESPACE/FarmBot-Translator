@@ -14,17 +14,17 @@
 	       	<table class="table table-striped">
 	          <thead class="thead-dark">
         	    <tr>
-	              <th scope="col">Original</th>
-        	      <th scope="col">Translation</th>
-        	      <th scope="col" class="d-none d-sm-table-cell">Last Update</th>
+	              <th scope="col" class="large-col">Original</th>
+        	      <th scope="col" class="large-col">Translation</th>
+        	      <th scope="col" class="small-col">Last Update</th>
 	            </tr>
 	          </thead>
 	          <tbody>
 	            {% for e in translations %}
 	                <tr scope="row">		    
-	                    <td class="col-sm-4">{{ e.original }}</td>
-	                    <td class="td-tr col-sm-4" id="td-{{ e.id }}">{{ e.translation }}</td>
-			    <td class="d-none d-sm-table-cell">{{ e.updated_at }}</td>			   
+	                    <td class="large-col">{{ e.original }}</td>
+	                    <td class="td-tr large-col" id="td-{{ e.id }}">{{ e.translation }}</td>
+			            <td class="small-col">{{ e.updated_at }}</td>
 	                </tr>
 	            {% endfor %}
 	          </tbody>
