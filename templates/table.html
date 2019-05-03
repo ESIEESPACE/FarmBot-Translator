@@ -18,10 +18,11 @@
             {% for e in translations %}
                 <tr>
                     <td>{{ e.original }}</td>
-                    <td class="td-tr" id="td-{{ e.position }}">{{ e.translation }}</td>
+                    <td class="td-tr" id="td-{{ e.id }}">{{ e.translation }}</td>
                 </tr>
             {% endfor %}
           </tbody>
         </table>
+
     </div>
 {% endblock %}

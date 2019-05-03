@@ -56,7 +56,7 @@ function saveTranslation() {
     let request = $.post( "update/",
         { 
             language: $.urlParam("language"),
-            id: parseInt(id.substring(3)) + 1,
+            id: parseInt(id.substring(3)),
             translation: content 
         });
 
