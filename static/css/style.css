@@ -6,6 +6,10 @@ th {
     width: 50%;
 }
 
+td {
+    white-space: pre-line;
+}
+
 .container{
     padding-top: 10px;
 }
