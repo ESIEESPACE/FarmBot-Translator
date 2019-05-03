@@ -17,3 +17,7 @@ th {
 .tz-tr {
     resize: vertical;
 }
+
+.download {
+    text-align: right;
+}

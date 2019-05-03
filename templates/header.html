@@ -5,21 +5,25 @@
     </button>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
+            <!-- Left -->
+        </ul>
+         <ul class="navbar-nav">
+            <!-- Right -->
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'import' %}">Import</a>
             </li>
-        </ul>
-         <ul class="navbar-nav">
+         {% if  languages.0 %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     {% if translations.0.language %}{{ translations.0.language }}{% else %}Choose a language to translate{% endif %}
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     {% for e in languages %}
                         <a class="dropdown-item" href="?language={{ e.short }}">{{ e }}</a>
                     {% endfor %}
                 </div>
+            {% endif %}
             </li>
         </ul>
     </div>
