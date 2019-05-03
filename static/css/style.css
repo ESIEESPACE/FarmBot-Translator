@@ -9,3 +9,11 @@ th {
 .container{
     padding-top: 10px;
 }
+
+.cnButton{
+    margin-top: 10px;
+}
+
+.tz-tr {
+    resize: vertical;
+}

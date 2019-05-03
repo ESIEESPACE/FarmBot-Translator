@@ -13,8 +13,8 @@ $(".td-tr").dblclick(function (event) {
 
     target.empty();
 
-    target.append("<textarea id=\"tz-" + id + "\" class=\"tz-tr form-control\">" + content + "</textarea>");
-    target.append("<input id=\"bt-" + id + "\" type='button' value='Cancel'>");
+    target.append("<textarea id='tz-" + id + "' class='tz-tr form-control'>" + content + "</textarea>");
+    target.append("<input id='bt-" + id + "' type='button' value='Cancel' class='btn btn-danger cnButton'>");
 
     let textarea = $("#tz-" + id);
     let cnButton = $("#bt-" + id);
@@ -47,5 +47,17 @@ function saveTranslation() {
     selected.removeClass("selected");
     selected.empty();
     selected.text(content);
-    $.post( "update/", { language: $.urlParam("language"), id: parseInt(id.substring(3)) + 1, translation: content } );
+    let request = $.post( "update/",
+        { 
+            language: $.urlParam("language"),
+            id: parseInt(id.substring(3)) + 1,
+            translation: content 
+        });
+    request.done(function () {
+
+    });
+
+    request.fail(function () {
+
+    })
 }
