@@ -1,8 +1,12 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-    <button><a href="{%  url 'download' %}?language={{  translations.0.language.short }}">Download</a></button>
     <div class="container">
+        <a href="{%  url 'download' %}?language={{  translations.0.language.short }}"><button class="btn btn-outline-primary">Download</button></a>
+    </div>
+
+    <div class="container">
+
         <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
