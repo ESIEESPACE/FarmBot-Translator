@@ -20,12 +20,19 @@ def index(request):
     try:
         language = Language.objects.get(short=short)
         translations = Translation.objects.filter(language=language).order_by('translated')
+
+        translated = translations.filter(translated=True).count()
+        total_translations = translations.count()
+
     except app.models.Language.DoesNotExist:
         translations = None
+        translated = None
+        total_translations = None
 
     languages = Language.objects.all()
+    
 
-    return render(request, 'table.html', context={"translations": translations, "languages": languages})
+    return render(request, 'table.html', context={"translations": translations, "languages": languages, "translated": translated, "total_translations": total_translations})
 
 @csrf_exempt
 def update_translation(request):

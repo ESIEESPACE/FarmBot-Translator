@@ -1,28 +1,35 @@
 {% extends 'skeleton.html' %}
 
 {% block body %}
-    <div class="container download" xmlns="http://www.w3.org/1999/html">
-        <a href="{%  url 'download' %}?language={{  translations.0.language.short }}"><button class="btn btn-outline-primary">Download</button></a>
-    </div>
+    
+    {% if translations %}
+    	<div class="container download" xmlns="http://www.w3.org/1999/html">
+		<p>
+			{{ translated }} / {{ total_translations }} sentences translated  
+		        <a href="{%  url 'download' %}?language={{  translations.0.language.short }}"><button class="btn btn-outline-primary">Download</button></a>
+		</p>
+	</div>
 
-    <div class="container">
-
-        <table class="table table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Original</th>
-              <th scope="col">Translation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for e in translations %}
-                <tr>
-                    <td>{{ e.original }}</td>
-                    <td class="td-tr" id="td-{{ e.id }}">{{ e.translation }}</td>
-                </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    	<div class="container">
+	       	<table class="table table-striped">
+	          <thead class="thead-dark">
+        	    <tr>
+	              <th scope="col">Original</th>
+        	      <th scope="col">Translation</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            {% for e in translations %}
+	                <tr>
+	                    <td>{{ e.original }}</td>
+	                    <td class="td-tr" id="td-{{ e.id }}">{{ e.translation }}</td>
+	                </tr>
+	            {% endfor %}
+	          </tbody>
+	        </table>
+    {% else %}
+    	<h3 class="text-center">No translation, please select a language or import a new one</h3>
+    {% endif %}
 
     </div>
     <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
