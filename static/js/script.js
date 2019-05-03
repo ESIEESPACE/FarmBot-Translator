@@ -101,4 +101,8 @@ function updateByID(id, content, date) {
     let row = $("#" + id);
     row.find("td.td-tr").text(content);
     row.find("td.date").text(date);
+    row.addClass("bg-success");
+    setTimeout(function(){
+        row.removeClass("bg-success")
+    }, 1500);
 }

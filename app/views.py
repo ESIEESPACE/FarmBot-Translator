@@ -6,11 +6,13 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django.utils.formats import localize
 from django.views.decorators.csrf import csrf_exempt
 
 import app
 from app import models
 from app.forms import UploadLanguageFileForm
+from app.mercure import Mercure
 from app.models import Translation, Language
 
 
@@ -30,9 +32,10 @@ def index(request):
         total_translations = None
 
     languages = Language.objects.all()
-    
 
-    return render(request, 'table.html', context={"translations": translations, "languages": languages, "translated": translated, "total_translations": total_translations})
+    m = Mercure(short)
+    config={"hubURL": m.hub_url, "topic": m.topic}
+    return render(request, 'table.html', context={"translations": translations, "languages": languages, "translated": translated, "total_translations": total_translations, 'config': config})
 
 @csrf_exempt
 def update_translation(request):
@@ -50,9 +53,15 @@ def update_translation(request):
         if not tr.other:
             tr.translated = True
         tr.save()
+
+        try:
+            m = Mercure(short)
+            m.hub_url = 'http://mercure:80/hub'
+            m.send(json.dumps({'id': tr.id, 'translation': tr.translation, 'updated_at': localize(tr.updated_at)}))
+        except Exception as e:
+            print(e)
     except Exception:
         return django.http.HttpResponseBadRequest()
-
     return django.http.HttpResponse(status=200)
 
 

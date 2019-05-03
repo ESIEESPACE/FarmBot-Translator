@@ -9,3 +9,9 @@ services:
       - ./:/code
     ports:
       - "8000:8000"
+  mercure:
+    image: dunglas/mercure
+    env_file:
+      - var.env
+    ports:
+      - "3000:80"
