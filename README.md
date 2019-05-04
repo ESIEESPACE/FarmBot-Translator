@@ -1,6 +1,6 @@
 # FarmBot Translator
 
-FarmBot Translator is a tool create by [Esieespace](https://esieespace.fr) to translate [Farmbot Web App](https://farmbot-translator.esieespace.fr)
+FarmBot Translator is a tool create by [Esieespace](https://esieespace.fr) to translate [Farmbot Web App](https://github.com/FarmBot/Farmbot-Web-App)
 
 You can use the version available at [https://farmbot-translator.esieespace.fr/](https://farmbot-translator.esieespace.fr/) or deploy your own.
 ## Configuration :
