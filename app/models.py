@@ -12,6 +12,7 @@ class Language(models.Model):
     short = models.CharField(max_length=5)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.SET(None), null=True)
 
     def __str__(self):
         return self.name+" ("+self.short+")"
@@ -26,6 +27,7 @@ class Translation(models.Model):
     language = models.ForeignKey(Language, on_delete=models.SET(None))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.SET(None), null=True)
 
     def __str__(self):
         if self.translated:

@@ -54,6 +54,7 @@ def update_translation(request):
         language = Language.objects.get(short=short)
         tr = Translation.objects.get(language=language, id=id)
         tr.translation = translation
+        tr.user = request.user
         if not tr.other:
             tr.translated = True
         tr.save()
@@ -86,7 +87,7 @@ def import_file(request):
         if form.is_valid():
             name = form.cleaned_data.get("name")
             short = str(form.cleaned_data.get("file"))[:str(form.cleaned_data.get("file")).find(".json")]
-            json_to_bdd(request.FILES['file'], name=name, short=short)
+            json_to_bdd(request.FILES['file'], name=name, short=short, user=request.user)
             return HttpResponseRedirect('/?language=' + short)
     else:
         form = UploadLanguageFileForm()
@@ -94,13 +95,13 @@ def import_file(request):
     return render(request, 'upload.html', {'form': form})
 
 
-def json_to_bdd(json_file, name, short):
+def json_to_bdd(json_file, name, short, user):
     decoded_json = json.loads(json_file.read())
 
     try:
         language = Language.objects.get(short=short)
     except models.Language.DoesNotExist:
-        language = Language.objects.create(name=name, short=short)
+        language = Language.objects.create(name=name, short=short, user=user)
 
     translated = [{'original': k, 'translation': v} for k, v in decoded_json.get("translated").items()]
     untranslated = [{'original': k, 'translation': ''} for k, v in decoded_json.get("untranslated").items()]
