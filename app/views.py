@@ -1,6 +1,10 @@
 import json
 
 import django
+from django.contrib import messages
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
@@ -11,11 +15,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 import app
 from app import models
-from app.forms import UploadLanguageFileForm
+from app.forms import UploadLanguageFileForm, UserForm, ProfileForm
 from app.mercure import Mercure
 from app.models import Translation, Language
 
-
+@login_required
 def index(request):
     short = request.GET.get("language", "")
 
@@ -74,7 +78,7 @@ def download(request):
     except app.models.Language.DoesNotExist:
         return django.http.HttpResponseNotFound()
 
-
+@login_required
 def import_file(request):
     if request.method == 'POST':
         form = UploadLanguageFileForm(request.POST, request.FILES)
@@ -157,3 +161,31 @@ def bdd_to_json(short):
     }
 
     return result
+
+
+@login_required
+@transaction.atomic
+def update_profile(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return HttpResponseRedirect('/')
+        else:
+            messages.error(request, ('Please correct the error below.'))
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'home/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+def Logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+def login(request):
+    return render(request, 'login.html')

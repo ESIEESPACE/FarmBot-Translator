@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
@@ -23,4 +24,6 @@ from farmbot_translator import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(urls)),
+    url(r'^account/', include('social_django.urls', namespace='social')),
+    url(r'^account/', include(('django.contrib.auth.urls', 'auth'), namespace='auth')),
 ] + static(settings.STATIC_URL)
