@@ -69,9 +69,8 @@ function saveTranslation() {
     })
 }
 
-function coloredSignal(object, bckColor, duration, txtColor = "rgba(255, 255, 255, 1)") {
-    //Time init
-    const refreshRate = 10;
+function coloredSignal(object, bckColor, duration, txtColor = "rgb(255, 255, 255)", refreshRate = 10) {
+    //Timer init
     let timeCounter = 0;
 
     //Original and target background
@@ -80,7 +79,7 @@ function coloredSignal(object, bckColor, duration, txtColor = "rgba(255, 255, 25
 
     //Original and target color
     let originTxtColor = object.css("color").substring(4).replace(')', '').split(',');
-    txtColor = txtColor.substring(5).replace(')', '').split(',');
+    txtColor = txtColor.substring(4).replace(')', '').split(',');
 
 
     let interval = setInterval(function () {
@@ -97,7 +96,7 @@ function coloredSignal(object, bckColor, duration, txtColor = "rgba(255, 255, 25
         object.css("background-color", tempBckColor);
 
         //Text color
-        let tempTxtColor = "rgba(";
+        let tempTxtColor = "rgb(";
         for(let i=0; i<3; i++){
             if(i!=0) tempTxtColor += ",";
             let coef = (parseFloat(originTxtColor[i]) - parseFloat(txtColor[i]))/duration;
