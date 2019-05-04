@@ -69,29 +69,51 @@ function saveTranslation() {
     })
 }
 
-function coloredSignal(object, color, duration) {
+function coloredSignal(object, bckColor, duration, txtColor = "rgba(255, 255, 255, 1)") {
+    //Time init
     const refreshRate = 10;
-    let origincolor = object.css("background-color").substring(5).replace(')', '').split(',');
-    color = color.substring(5).replace(')', '').split(',');
-
     let timeCounter = 0;
 
-    let interval = setInterval(function () {
-        let newcolor = "rgba(";
-        for(let i=0; i<4; i++){
-            if(i!=0) newcolor += ",";
-            let coef = (parseFloat(origincolor[i]) - parseFloat(color[i]))/duration;
-            let cons = -coef * duration + parseFloat(origincolor[i]);
-            newcolor += coef * timeCounter + cons;
-        }
-        newcolor += ")";
-        object.css("background-color", newcolor);
+    //Original and target background
+    let originBckColor = object.css("background-color").substring(5).replace(')', '').split(',');
+    bckColor = bckColor.substring(5).replace(')', '').split(',');
 
+    //Original and target color
+    let originTxtColor = object.css("color").substring(4).replace(')', '').split(',');
+    txtColor = txtColor.substring(5).replace(')', '').split(',');
+
+
+    let interval = setInterval(function () {
+
+        //Background color
+        let tempBckColor = "rgba(";
+        for(let i=0; i<4; i++){
+            if(i!=0) tempBckColor += ",";
+            let coef = (parseFloat(originBckColor[i]) - parseFloat(bckColor[i]))/duration;
+            let cons = -coef * duration + parseFloat(originBckColor[i]);
+            tempBckColor += coef * timeCounter + cons;
+        }
+        tempBckColor += ")";
+        object.css("background-color", tempBckColor);
+
+        //Text color
+        let tempTxtColor = "rgba(";
+        for(let i=0; i<3; i++){
+            if(i!=0) tempTxtColor += ",";
+            let coef = (parseFloat(originTxtColor[i]) - parseFloat(txtColor[i]))/duration;
+            let cons = -coef * duration + parseFloat(originTxtColor[i]);
+            tempTxtColor += coef * timeCounter + cons;
+        }
+        tempTxtColor += ")";
+        object.css("color", tempTxtColor);
+
+        //Timing operations
         timeCounter += refreshRate;
         if(timeCounter >= duration) {
             clearInterval(interval);
             setTimeout(function () {
-                object.css("background-color", origincolor);
+                object.css("background-color", "");
+                object.css("color", "");
             }, refreshRate)
         }
     }, refreshRate);
