@@ -1,0 +1,58 @@
+{% extends 'skeleton.html' %}
+
+{% block body %}
+
+    <h3 class="text-center">Leaderboard :</h3>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="large-col">Username</th>
+                <th scope="col" class="large-col">Translations</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for e in users %}
+                <tr scope="row">
+                    <td class="large-col">{{ e.user__username }}</td>
+                    <td class="large-col">{{ e.count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Help</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <b>How to change language ?</b><br/>
+                    <p>Click on the language selector in the page right corner of the page.</p></br>
+
+                    <b>How to edit document ?</b><br/>
+                    <p>Double click on the translation area to edit it. <br/> To save your changes just double click on
+                        the text box or click on the save button.</p><br/>
+
+                    <b>Why translations can change their values alone ?</b><br/>
+                    <p>When another user changes the value of a translation, this change automatically appears on the
+                        screen.</p></br>
+
+                    <b>How import a new language ?</b><br/>
+                    <p>Go to import page, write the language's name and select the correct path for the JSON file. You
+                        must be connect to add a language.</p><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="help" data-toggle="modal" data-target="#helpModal"><b>?</b></button>
+{% endblock %}

@@ -15,7 +15,8 @@ urlpatterns = [
     path('import/', views.import_file, name="import"),
     path('download/', views.download, name="download"),
     path('update/', views.update_translation, name="update"),
+    path('leaderboard/', views.leaderboard, name="leaderboard"),
     path('login/', views.login, name="login"),
     url(r'^profile/$', views.update_profile),
-    url(r'^account/logout/$', views.Logout),
+    url(r'^account/logout/$', views.Logout, name='logout'),
 ]

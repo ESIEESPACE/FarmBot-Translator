@@ -1,41 +1,49 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-	<a class="navbar-brand" href="{% url 'index' %}">FarmBot Translator</a>
+    <a class="navbar-brand" href="{% url 'index' %}">FarmBot Translator</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headerNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="headerNavbar">
         <ul class="navbar-nav mr-auto">
-        	<!-- Left -->
-		<span class="text-white">by <a href="https://esieespace.fr">Esieespace</a></span>
+            <!-- Left -->
+            <span class="text-white">by <a href="https://esieespace.fr">Esieespace</a></span>
         </ul>
-         <ul class="navbar-nav">
-         {% if user.is_authenticated %}
-             <li class="nav-item">
-                <a class="nav-link" href="/account/logout">Logout</a>
-             </li>
-         {% else %}
-             <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-         {%  endif %}
+        <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
             <!-- Right -->
-         {% if user.is_staff %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'import' %}">Import</a>
-            </li>
-         {% endif %}
+            {% if user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'import' %}">Import</a>
+                </li>
+            {% endif %}
 
-         {% if  languages.0 %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    {% if translations.0.language %}{{ translations.0.language }}{% else %}Choose a language to translate{% endif %}
-                </a>
-             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {% for e in languages %}
-                        <a class="dropdown-item" href="?language={{ e.short }}">{{ e }}</a>
-                    {% endfor %}
-                </div>
+            {% if  languages.0 %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% if translations.0.language %}{{ translations.0.language }}{% else %}Choose a language to
+                            translate{% endif %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for e in languages %}
+                            <a class="dropdown-item" href="?language={{ e.short }}">{{ e }}</a>
+                        {% endfor %}
+                    </div>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
             {% endif %}
             </li>
         </ul>

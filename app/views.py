@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 
@@ -190,3 +190,8 @@ def Logout(request):
 
 def login(request):
     return render(request, 'login.html')
+
+@login_required
+def leaderboard(request):
+    users = Translation.objects.all().filter(user_id__isnull=False).values('user__username').annotate(count=Count('user')).order_by('-count')
+    return render(request, 'leaderboard.html', context={'users': users})
