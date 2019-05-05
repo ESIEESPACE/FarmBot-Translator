@@ -60,10 +60,6 @@ function saveTranslation() {
             translation: content 
         });
 
-    request.done(function () {
-        coloredSignal(tr, "rgba(40, 167, 69, 1)", 500);
-    });
-
     request.fail(function () {
         coloredSignal(tr, "rgba(250, 55, 69, 1)", 500);
     })
