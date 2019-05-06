@@ -55,8 +55,7 @@ def update_translation(request):
         tr = Translation.objects.get(language=language, id=id)
         tr.translation = translation
         tr.user = request.user
-        if not tr.other:
-            tr.translated = True
+        tr.translated = True
         tr.save()
 
         try:
